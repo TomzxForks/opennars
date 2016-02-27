@@ -1,9 +1,59 @@
-**Open-NARS** is the open-source version of [NARS](https://sites.google.com/site/narswang/home), a general-purpose AI system, designed in the framework of a reasoning system.  This project is an evolution of the [v1.5 system](http://code.google.com/p/open-nars/).  The [mailing list](https://groups.google.com/forum/?fromgroups#!forum/open-nars) discusses both its theory and implementation.
-
 ![OpenNARS Logo](https://raw.githubusercontent.com/opennars/opennars/graphplan1/doc/opennars_logo.png)
 
-Theory Overview
----------------
+**Open-NARS** is the open-source version of [NARS](https://sites.google.com/site/narswang/home), a general-purpose AI system, designed in the framework of a reasoning system. This project is an evolution of the [v1.5 system](http://code.google.com/p/open-nars/). The [mailing list](https://groups.google.com/forum/?fromgroups#!forum/open-nars) discusses both its theory and implementation.
+
+
+# Getting Started
+
+## Requirements
+
+ * Java 8 (OpenJDK or [Oracle JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html))
+ * [Maven](https://maven.apache.org/), or an IDE with Maven support (for example, [Intellij IDEA](https://www.jetbrains.com/idea))
+
+
+## Command Shell Usage
+
+You can launch NARS in several ways from command window (shell):
+
+```
+- console (reads from stdin and writes to stdout):
+    ./nars.sh
+
+- gui (Swing)
+    ./gui.sh [.nal input file]
+
+- reasoner loaded from an experience file:
+    ./nars.sh Examples/Example-NAL1-edited.txt --silence 90
+
+- web server start for HTML GUI usage:
+    ./web.sh 9999 localhost 9100 1000
+     listen port^     ^IP    ^port ^time for each reasoning step in ms
+```
+
+
+# Repository structure
+
+## Contents
+
+ * `nars_logic` - main logic engine
+ * `nars_gui` - java.swing GUI
+ * `nars_web` - web server
+ * `nars_lab` - experiments & demos
+ * `nal` - examples
+
+In `nars_logic` and `nars_gui` are the NARS core and the Swing GUI in Java. This is derived from the original code of Pei Wang.
+
+For an overview of reasoning features, see working examples explained in [SingleStepTestingCases](#missing) and [MultiStepExamples](#missing).
+
+## Example Files
+
+Example experience files are in directory `nal`.
+ * `Example-NALn-*.txt` contains single step examples for most of the inference rules defined in NAL level n. The "edited" version contains English translations, and with the unrelated information removed; the "unedited" version contains the actual input/output data recorded by the "Save Experience" function of the GUI. The files can be loaded using the "Load Experience" function of the GUI. 
+ * `Example-MultiStep-edited` contains multi-step inference examples described in https://github.com/opennars/opennars/wiki/MultiStep-Examples
+ * `Example-NLP-edited` contains an example of natural language processing described in the AGI-13 paper "[Natural Language Processing by Reasoning and Learning](http://cis-linux1.temple.edu/~pwang/Publication/NLP.pdf)".
+
+
+# Theory Overview
 
 Non-Axiomatic Reasoning System ([NARS](https://sites.google.com/site/narswang/home)) processes tasks imposed by its environment, which may include human users or other computer systems. Tasks can arrive at any time, and there is no restriction on their contents as far as they can be expressed in __Narsese__, the I/O language of NARS.
 
@@ -14,7 +64,6 @@ There are several types of __tasks__:
  * **Goal** - To process it means to carry out some system operations to realize it.
 
 > _The design of NARS makes no assumption about the content or desire-value of the given goals. How to choose proper given goals for each application is a problem to be solved in the future by the people responsible for the application._
-
 
 As a reasoning system, the [architecture of NARS](http://www.cis.temple.edu/~pwang/Implementation/NARS/architecture.pdf) consists of a **memory**, an **inference engine**, and a **control mechanism**.
 
@@ -43,88 +92,29 @@ Beginners can start at the following online materials:
  * The memory and control: [Computation and Intelligence in Problem Solving](http://www.cis.temple.edu/~pwang/Writing/computation.pdf)
 
 
-Contents
---------
- * **nars_java** - main logic engine
- * **nars_gui** - java.swing GUI
- * **nars_scala** - embryo of NARS in Scala (not currently active, just to see how NARS could look in Scala)
- * **nars_web** - web server
- * **nars_lab** - experiments & demos
- * **nars_test** - unit tests
- * **nal** - examples
+# History
 
-In nars_java/ and nars_gui/ are the NARS core and the Swing GUI in Java. This is derived from the code of Pei Wang in nars_java.0/ directory.
+Under the `nars_java.0` directory was the code Pei Wang originally moved into the project. This is no active anymore, replaced by `nars_java` and `nars_gui`.
 
-For an overview of reasoning features, see working examples explained in SingleStepTestingCases and MultiStepExamples.
-
-
-Run Requirements
-----------------
- * Java 8 (OpenJDK or Oracle JDK)
-
-
-Command Shell Usage
--------------------
-You can launch NARS in several ways from command window (shell):
-
-```
-- console (reads from stdin and writes to stdout):
-    ./nars.sh
-
-- gui (Swing)
-    ./gui.sh [.nal input file]
-    
-- reasoner loaded from an experience file:
-    ./nars.sh Examples/Example-NAL1-edited.txt --silence 90
-
-- web server start for HTML GUI usage:
-    ./web.sh 9999 localhost 9100 1000
-     listen port^     ^IP    ^port ^time for each reasoning step in ms
-```
-
-
-Example Files
--------------
-
-Example experience files are in directory nal/Examples
- * "Example-NALn-*.txt" contains single step examples for most of the inference rules defined in NAL level n. The "edited" version contains English translations, and with the unrelated information removed; the "unedited" version contains the actual input/output data recorded by the "Save Experience" function of the GUI. The files can be loaded using the "Load Experience" function of the GUI. 
- * "Example-MultiStep-edited" contains multi-step inference examples described in http://code.google.com/p/open-nars/wiki/MultiStepExamples
- * "Example-NLP-edited" contains an example of natural language processing described in the AGI-13 paper "Natural Language Processing by Reasoning and Learning".
-
-Unit tests are in nal/test.
-
-
-Development Requirements
-------------------------
- * maven, or an IDE with maven support
-
-
-History
--------
-Under the nars_java.0/ directory is the code Pei Wang originally moved into the project, which is still the base of his own programming. This is no active anymore, replaced by nars_java/ and nars_gui/ .
-
-Later Joe Geldart started the nars_java.geldart/ version of NARS, which contains many good ideas (many of which are accepted into 1.5), but it isn't fully consistent with Pei's plan, especially about the new layers (7,8,9), so Pei didn't continue on that code base.
+Later Joe Geldart started the `nars_java.geldart` version of NARS, which contains many good ideas (many of which are accepted into 1.5), but it isn't fully consistent with Pei's plan, especially about the new layers (7, 8, 9), so Pei Wang didn't continue on that code base.
 
 Jean-Marc Vanel continued work on this roadmap, mainly in GUI and software engineering tasks contributing a non-regression test suite and separating NARS into Core and GUI modules.
 
 
-Source Code status
-------------------
-See also http://code.google.com/p/open-nars/wiki/ProjectStatus
+# Source Code status
+
+See also https://github.com/opennars/opennars/wiki/Project-Status
 
 Current version has been fully tested for single capability at a time; there may still be bugs when combining capabilities.
 
 
 
-Links
------
+# Links
+
 An (outdated) HTML user manual:
  * http://www.cis.temple.edu/~pwang/Implementation/NARS/NARS-GUI-Guide.html
 
 The project home page:
- * https://code.google.com/p/open-nars/
-
-This version was however developed on Github:
  * https://github.com/opennars/opennars
 
 Discussion Group:
